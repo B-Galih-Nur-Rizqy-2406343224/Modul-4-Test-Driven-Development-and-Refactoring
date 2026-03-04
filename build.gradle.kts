@@ -84,7 +84,7 @@ tasks.jacocoTestReport {
 
 sonar {
     properties {
-        property("sonar.projectKey", "B-Galih-Nur-Rizqy-2406343224_Modul-2-CI-CD-DevOps")
+        property("sonar.projectKey", "B-Galih-Nur-Rizqy-2406343224_Modul-4-Test-Driven-Development-and-Refactoring")
         property("sonar.organization", "b-galih-nur-rizqy-2406343224")
         property("sonar.host.url", "https://sonarcloud.io")
         property("sonar.java.binaries", "build/classes")
