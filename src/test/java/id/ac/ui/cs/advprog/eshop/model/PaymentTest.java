@@ -1,5 +1,7 @@
 package id.ac.ui.cs.advprog.eshop.model;
 
+import id.ac.ui.cs.advprog.eshop.enums.PaymentMethod;
+import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,10 +35,10 @@ class PaymentTest {
         Map<String, String> paymentData = new HashMap<>();
         paymentData.put("voucherCode", "ESHOP1234ABC5678");
 
-        Payment payment = new Payment("pay-001", "VOUCHER_CODE", paymentData);
+        Payment payment = new Payment("pay-001", PaymentMethod.VOUCHER_CODE.getValue(), paymentData);
         assertEquals("pay-001", payment.getId());
-        assertEquals("VOUCHER_CODE", payment.getMethod());
-        assertEquals("SUCCESS", payment.getStatus());
+        assertEquals(PaymentMethod.VOUCHER_CODE.getValue(), payment.getMethod());
+        assertEquals(PaymentStatus.SUCCESS.getValue(), payment.getStatus());
         assertEquals(paymentData, payment.getPaymentData());
     }
 
@@ -45,8 +47,8 @@ class PaymentTest {
         Map<String, String> paymentData = new HashMap<>();
         paymentData.put("voucherCode", "ABCDE1234ABC5678");
 
-        Payment payment = new Payment("pay-002", "VOUCHER_CODE", paymentData);
-        assertEquals("REJECTED", payment.getStatus());
+        Payment payment = new Payment("pay-002", PaymentMethod.VOUCHER_CODE.getValue(), paymentData);
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
     }
 
     @Test
@@ -54,8 +56,8 @@ class PaymentTest {
         Map<String, String> paymentData = new HashMap<>();
         paymentData.put("voucherCode", "ESHOP1234");
 
-        Payment payment = new Payment("pay-003", "VOUCHER_CODE", paymentData);
-        assertEquals("REJECTED", payment.getStatus());
+        Payment payment = new Payment("pay-003", PaymentMethod.VOUCHER_CODE.getValue(), paymentData);
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
     }
 
     @Test
@@ -63,8 +65,8 @@ class PaymentTest {
         Map<String, String> paymentData = new HashMap<>();
         paymentData.put("voucherCode", "ESHOPABCDEFGHIJK");
 
-        Payment payment = new Payment("pay-004", "VOUCHER_CODE", paymentData);
-        assertEquals("REJECTED", payment.getStatus());
+        Payment payment = new Payment("pay-004", PaymentMethod.VOUCHER_CODE.getValue(), paymentData);
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
     }
 
     @Test
@@ -72,16 +74,16 @@ class PaymentTest {
         Map<String, String> paymentData = new HashMap<>();
         paymentData.put("voucherCode", null);
 
-        Payment payment = new Payment("pay-005", "VOUCHER_CODE", paymentData);
-        assertEquals("REJECTED", payment.getStatus());
+        Payment payment = new Payment("pay-005", PaymentMethod.VOUCHER_CODE.getValue(), paymentData);
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
     }
 
     @Test
     void testPaymentVoucherCodeKeyMissing() {
         Map<String, String> paymentData = new HashMap<>();
 
-        Payment payment = new Payment("pay-006", "VOUCHER_CODE", paymentData);
-        assertEquals("REJECTED", payment.getStatus());
+        Payment payment = new Payment("pay-006", PaymentMethod.VOUCHER_CODE.getValue(), paymentData);
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
     }
 
     // ===================== BANK TRANSFER TESTS =====================
@@ -92,8 +94,8 @@ class PaymentTest {
         paymentData.put("bankName", "BCA");
         paymentData.put("referenceCode", "REF123456");
 
-        Payment payment = new Payment("pay-101", "BANK_TRANSFER", paymentData);
-        assertEquals("SUCCESS", payment.getStatus());
+        Payment payment = new Payment("pay-101", PaymentMethod.BANK_TRANSFER.getValue(), paymentData);
+        assertEquals(PaymentStatus.SUCCESS.getValue(), payment.getStatus());
     }
 
     @Test
@@ -102,8 +104,8 @@ class PaymentTest {
         paymentData.put("bankName", "");
         paymentData.put("referenceCode", "REF123456");
 
-        Payment payment = new Payment("pay-102", "BANK_TRANSFER", paymentData);
-        assertEquals("REJECTED", payment.getStatus());
+        Payment payment = new Payment("pay-102", PaymentMethod.BANK_TRANSFER.getValue(), paymentData);
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
     }
 
     @Test
@@ -112,8 +114,8 @@ class PaymentTest {
         paymentData.put("bankName", null);
         paymentData.put("referenceCode", "REF123456");
 
-        Payment payment = new Payment("pay-103", "BANK_TRANSFER", paymentData);
-        assertEquals("REJECTED", payment.getStatus());
+        Payment payment = new Payment("pay-103", PaymentMethod.BANK_TRANSFER.getValue(), paymentData);
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
     }
 
     @Test
@@ -122,8 +124,8 @@ class PaymentTest {
         paymentData.put("bankName", "BCA");
         paymentData.put("referenceCode", "");
 
-        Payment payment = new Payment("pay-104", "BANK_TRANSFER", paymentData);
-        assertEquals("REJECTED", payment.getStatus());
+        Payment payment = new Payment("pay-104", PaymentMethod.BANK_TRANSFER.getValue(), paymentData);
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
     }
 
     @Test
@@ -132,8 +134,8 @@ class PaymentTest {
         paymentData.put("bankName", "BCA");
         paymentData.put("referenceCode", null);
 
-        Payment payment = new Payment("pay-105", "BANK_TRANSFER", paymentData);
-        assertEquals("REJECTED", payment.getStatus());
+        Payment payment = new Payment("pay-105", PaymentMethod.BANK_TRANSFER.getValue(), paymentData);
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
     }
 
     @Test
@@ -141,8 +143,8 @@ class PaymentTest {
         Map<String, String> paymentData = new HashMap<>();
         paymentData.put("referenceCode", "REF123456");
 
-        Payment payment = new Payment("pay-106", "BANK_TRANSFER", paymentData);
-        assertEquals("REJECTED", payment.getStatus());
+        Payment payment = new Payment("pay-106", PaymentMethod.BANK_TRANSFER.getValue(), paymentData);
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
     }
 
     @Test
@@ -150,8 +152,8 @@ class PaymentTest {
         Map<String, String> paymentData = new HashMap<>();
         paymentData.put("bankName", "BCA");
 
-        Payment payment = new Payment("pay-107", "BANK_TRANSFER", paymentData);
-        assertEquals("REJECTED", payment.getStatus());
+        Payment payment = new Payment("pay-107", PaymentMethod.BANK_TRANSFER.getValue(), paymentData);
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
     }
 
     @Test
@@ -160,8 +162,8 @@ class PaymentTest {
         paymentData.put("bankName", "");
         paymentData.put("referenceCode", "");
 
-        Payment payment = new Payment("pay-108", "BANK_TRANSFER", paymentData);
-        assertEquals("REJECTED", payment.getStatus());
+        Payment payment = new Payment("pay-108", PaymentMethod.BANK_TRANSFER.getValue(), paymentData);
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
     }
 
     // ===================== GENERAL TESTS =====================
@@ -172,9 +174,9 @@ class PaymentTest {
         paymentData.put("bankName", "BCA");
         paymentData.put("referenceCode", "REF123456");
 
-        Payment payment = new Payment("pay-201", "BANK_TRANSFER", paymentData);
-        payment.setStatus("REJECTED");
-        assertEquals("REJECTED", payment.getStatus());
+        Payment payment = new Payment("pay-201", PaymentMethod.BANK_TRANSFER.getValue(), paymentData);
+        payment.setStatus(PaymentStatus.REJECTED.getValue());
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
     }
 
     @Test
@@ -183,7 +185,7 @@ class PaymentTest {
         paymentData.put("bankName", "BCA");
         paymentData.put("referenceCode", "REF123456");
 
-        Payment payment = new Payment("pay-202", "BANK_TRANSFER", paymentData);
+        Payment payment = new Payment("pay-202", PaymentMethod.BANK_TRANSFER.getValue(), paymentData);
         assertThrows(IllegalArgumentException.class, () -> payment.setStatus("MEOW"));
     }
 }
