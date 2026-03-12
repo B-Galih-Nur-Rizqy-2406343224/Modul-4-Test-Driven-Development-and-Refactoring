@@ -1,6 +1,7 @@
 package id.ac.ui.cs.advprog.eshop.service;
 
 import id.ac.ui.cs.advprog.eshop.enums.OrderStatus;
+import id.ac.ui.cs.advprog.eshop.enums.PaymentMethod;
 import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
 import id.ac.ui.cs.advprog.eshop.model.Order;
 import id.ac.ui.cs.advprog.eshop.model.Payment;
@@ -48,8 +49,8 @@ class PaymentServiceImplTest {
 
         when(paymentRepository.save(any(Payment.class))).thenAnswer(i -> i.getArguments()[0]);
 
-        Payment result = paymentService.addPayment(order, "VOUCHER_CODE", paymentData);
-        assertEquals("SUCCESS", result.getStatus());
+        Payment result = paymentService.addPayment(order, PaymentMethod.VOUCHER_CODE.getValue(), paymentData);
+        assertEquals(PaymentStatus.SUCCESS.getValue(), result.getStatus());
         verify(paymentRepository, times(1)).save(any(Payment.class));
     }
 
@@ -61,8 +62,8 @@ class PaymentServiceImplTest {
 
         when(paymentRepository.save(any(Payment.class))).thenAnswer(i -> i.getArguments()[0]);
 
-        Payment result = paymentService.addPayment(order, "BANK_TRANSFER", paymentData);
-        assertEquals("SUCCESS", result.getStatus());
+        Payment result = paymentService.addPayment(order, PaymentMethod.BANK_TRANSFER.getValue(), paymentData);
+        assertEquals(PaymentStatus.SUCCESS.getValue(), result.getStatus());
         verify(paymentRepository, times(1)).save(any(Payment.class));
     }
 
@@ -74,10 +75,10 @@ class PaymentServiceImplTest {
 
         when(paymentRepository.save(any(Payment.class))).thenAnswer(i -> i.getArguments()[0]);
 
-        Payment payment = paymentService.addPayment(order, "BANK_TRANSFER", paymentData);
-        Payment result = paymentService.setStatus(payment, "SUCCESS");
+        Payment payment = paymentService.addPayment(order, PaymentMethod.BANK_TRANSFER.getValue(), paymentData);
+        Payment result = paymentService.setStatus(payment, PaymentStatus.SUCCESS.getValue());
 
-        assertEquals("SUCCESS", result.getStatus());
+        assertEquals(PaymentStatus.SUCCESS.getValue(), result.getStatus());
         assertEquals(OrderStatus.SUCCESS.getValue(), order.getStatus());
     }
 
@@ -89,10 +90,10 @@ class PaymentServiceImplTest {
 
         when(paymentRepository.save(any(Payment.class))).thenAnswer(i -> i.getArguments()[0]);
 
-        Payment payment = paymentService.addPayment(order, "BANK_TRANSFER", paymentData);
-        Payment result = paymentService.setStatus(payment, "REJECTED");
+        Payment payment = paymentService.addPayment(order, PaymentMethod.BANK_TRANSFER.getValue(), paymentData);
+        Payment result = paymentService.setStatus(payment, PaymentStatus.REJECTED.getValue());
 
-        assertEquals("REJECTED", result.getStatus());
+        assertEquals(PaymentStatus.REJECTED.getValue(), result.getStatus());
         assertEquals(OrderStatus.FAILED.getValue(), order.getStatus());
     }
 
@@ -102,7 +103,7 @@ class PaymentServiceImplTest {
         paymentData.put("bankName", "BCA");
         paymentData.put("referenceCode", "REF123456");
 
-        Payment payment = new Payment("pay-005", "BANK_TRANSFER", paymentData);
+        Payment payment = new Payment("pay-005", PaymentMethod.BANK_TRANSFER.getValue(), paymentData);
         when(paymentRepository.findById("pay-005")).thenReturn(payment);
 
         Payment result = paymentService.getPayment("pay-005");
@@ -125,8 +126,8 @@ class PaymentServiceImplTest {
         d2.put("bankName", "BCA");
         d2.put("referenceCode", "REF123456");
 
-        Payment p1 = new Payment("pay-006", "VOUCHER_CODE", d1);
-        Payment p2 = new Payment("pay-007", "BANK_TRANSFER", d2);
+        Payment p1 = new Payment("pay-006", PaymentMethod.VOUCHER_CODE.getValue(), d1);
+        Payment p2 = new Payment("pay-007", PaymentMethod.BANK_TRANSFER.getValue(), d2);
         when(paymentRepository.findAll()).thenReturn(List.of(p1, p2));
 
         List<Payment> result = paymentService.getAllPayments();
