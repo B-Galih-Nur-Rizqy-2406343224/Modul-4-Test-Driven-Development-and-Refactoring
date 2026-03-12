@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.eshop.repository;
 
+import id.ac.ui.cs.advprog.eshop.enums.PaymentMethod;
 import id.ac.ui.cs.advprog.eshop.model.Payment;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,7 @@ class PaymentRepositoryTest {
 
     @Test
     void testSavePayment() {
-        Payment payment = new Payment("pay-001", "VOUCHER_CODE", voucherData);
+        Payment payment = new Payment("pay-001", PaymentMethod.VOUCHER_CODE.getValue(), voucherData);
         Payment saved = paymentRepository.save(payment);
 
         assertEquals(payment.getId(), saved.getId());
@@ -39,10 +40,10 @@ class PaymentRepositoryTest {
 
     @Test
     void testSavePaymentUpdate() {
-        Payment payment = new Payment("pay-001", "VOUCHER_CODE", voucherData);
+        Payment payment = new Payment("pay-001", PaymentMethod.VOUCHER_CODE.getValue(), voucherData);
         paymentRepository.save(payment);
 
-        Payment updated = new Payment("pay-001", "BANK_TRANSFER", bankTransferData);
+        Payment updated = new Payment("pay-001", PaymentMethod.BANK_TRANSFER.getValue(), bankTransferData);
         Payment saved = paymentRepository.save(updated);
 
         assertEquals(updated.getMethod(), saved.getMethod());
@@ -51,7 +52,7 @@ class PaymentRepositoryTest {
 
     @Test
     void testFindByIdFound() {
-        Payment payment = new Payment("pay-001", "VOUCHER_CODE", voucherData);
+        Payment payment = new Payment("pay-001", PaymentMethod.VOUCHER_CODE.getValue(), voucherData);
         paymentRepository.save(payment);
 
         Payment found = paymentRepository.findById("pay-001");
@@ -67,8 +68,8 @@ class PaymentRepositoryTest {
 
     @Test
     void testFindAll() {
-        Payment p1 = new Payment("pay-001", "VOUCHER_CODE", voucherData);
-        Payment p2 = new Payment("pay-002", "BANK_TRANSFER", bankTransferData);
+        Payment p1 = new Payment("pay-001", PaymentMethod.VOUCHER_CODE.getValue(), voucherData);
+        Payment p2 = new Payment("pay-002", PaymentMethod.BANK_TRANSFER.getValue(), bankTransferData);
         paymentRepository.save(p1);
         paymentRepository.save(p2);
 
