@@ -72,10 +72,9 @@ class PaymentServiceImplTest {
         paymentData.put("bankName", "BCA");
         paymentData.put("referenceCode", "REF123456");
 
-        Payment payment = new Payment("pay-003", "BANK_TRANSFER", paymentData);
         when(paymentRepository.save(any(Payment.class))).thenAnswer(i -> i.getArguments()[0]);
 
-        paymentService.addPayment(order, "BANK_TRANSFER", paymentData);
+        Payment payment = paymentService.addPayment(order, "BANK_TRANSFER", paymentData);
         Payment result = paymentService.setStatus(payment, "SUCCESS");
 
         assertEquals("SUCCESS", result.getStatus());
@@ -88,10 +87,9 @@ class PaymentServiceImplTest {
         paymentData.put("bankName", "BCA");
         paymentData.put("referenceCode", "REF123456");
 
-        Payment payment = new Payment("pay-004", "BANK_TRANSFER", paymentData);
         when(paymentRepository.save(any(Payment.class))).thenAnswer(i -> i.getArguments()[0]);
 
-        paymentService.addPayment(order, "BANK_TRANSFER", paymentData);
+        Payment payment = paymentService.addPayment(order, "BANK_TRANSFER", paymentData);
         Payment result = paymentService.setStatus(payment, "REJECTED");
 
         assertEquals("REJECTED", result.getStatus());
